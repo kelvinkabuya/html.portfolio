@@ -3,22 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelvin Kabuya Portfolio</title>
+    <title>My Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-1: #0a0b0f;       /* deep charcoal */
+            --bg-2: #11131a;       /* slightly lighter charcoal */
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --card-border: rgba(255, 255, 255, 0.14);
+            --text: #f2f4fa;       /* crisp off-white */
+            --muted: #9aa3c7;      /* cool-muted */
+            --accent: #00e7ff;     /* neon cyan */
+            --accent-2: #ff4fd8;   /* neon magenta */
+            --shadow: rgba(2, 6, 12, 0.55);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            /* Noones mesh */
+            background:
+                radial-gradient(70rem 50rem at 120% -10%, rgba(255, 79, 216, 0.14), transparent 55%),
+                radial-gradient(60rem 40rem at -20% 120%, rgba(0, 231, 255, 0.12), transparent 55%),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            animation: bgPulse 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            100% { background-position: 3% 2%, -2% 6%, 1% 1%, 0% 0%; }
+        }
+
+        /* Header glass card */
+        header {
+            max-width: min(1100px, 92vw);
+            margin: 0 auto 34px;
+            padding: clamp(32px, 6vw, 64px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 22px 40px var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        header::after {
+            content: "";
+            position: absolute;
+            inset: -30% -30% auto auto;
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 231, 255, 0.22), transparent 60%);
+            filter: blur(14px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #ffffff, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 8px 24px rgba(0, 231, 255, 0.18);
+            letter-spacing: 0.5px;
+        }
+        h2 {
+            font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+            font-weight: 500;
+            color: var(--muted);
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            padding: 8px 14px;
+            border-radius: 999px;
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            margin: 28px auto 36px;
+            width: min(980px, 92vw);
+            background: linear-gradient(90deg, transparent, rgba(0, 231, 255, 0.55), rgba(255, 79, 216, 0.55), transparent);
+            filter: drop-shadow(0 2px 10px rgba(0, 231, 255, 0.22));
+        }
+
+        /* Section headings */
+        .language-section {
+            max-width: min(1100px, 92vw);
+            margin: 0 auto 50px;
+        }
+        .language-section h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 16px;
+            padding-bottom: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--accent);
+            filter: drop-shadow(0 0 10px rgba(0, 231, 255, 0.2));
+        }
+        .language-section h3::before {
+            content: "";
+            width: 10px; height: 10px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-2));
+            box-shadow: 0 0 18px rgba(0, 231, 255, 0.75);
+        }
+
+        /* Project grid + cards */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(14px, 2vw, 22px);
+        }
+        .project {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            box-shadow: 0 16px 36px var(--shadow);
+            overflow: hidden;
+        }
+        .project:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px var(--shadow);
+            border-color: color-mix(in oklab, var(--accent) 50%, transparent);
+        }
+        .project::after {
+            content: "";
+            position: absolute;
+            inset: -120% -60% auto auto;
+            width: 220%;
+            height: 220%;
+            background: linear-gradient(120deg, transparent 40%, rgba(0, 231, 255, 0.04) 50%, transparent 60%);
+            transform: rotate(8deg);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+        .project:hover::after {
+            opacity: 1;
+            transform: translateY(30%) rotate(8deg);
+        }
+        .project h4 {
+            font-size: 1.15rem;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: 0.2px;
+        }
+        .project p {
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .project a {
+            display: inline-block;
+            color: #07090d;
+            text-decoration: none;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border: none;
+            padding: 10px 14px;
+            border-radius: 12px;
+            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 28px rgba(0, 231, 255, 0.28);
+        }
+        .project a:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 18px 36px rgba(0, 231, 255, 0.35);
+        }
+        .project img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            opacity: 0.98;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+        }
+        .project img:hover { transform: scale(1.02); opacity: 1; }
+
+        /* Contact section */
+        .contact-section {
+            max-width: min(880px, 92vw);
+            margin: 0 auto 50px;
+        }
+        .contact-section h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 16px;
+            display: inline-block;
+            border-bottom: 2px solid var(--accent);
+            background:
+                linear-gradient(var(--text), var(--text)) padding-box,
+                linear-gradient(90deg, var(--accent), var(--accent-2)) border-box;
+            border-radius: 6px;
+            padding-bottom: 6px;
+        }
+        .contact-form {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: clamp(18px, 3vw, 24px);
+            box-shadow: 0 16px 36px var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--muted);
+        }
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form button {
+            font-family: 'Poppins', sans-serif;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .contact-form textarea { min-height: 120px; resize: vertical; }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: rgba(0, 231, 255, 0.5);
+            box-shadow: 0 0 0 4px rgba(0, 231, 255, 0.18);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .contact-form button {
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: #07090d;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 12px 28px rgba(0, 231, 255, 0.28);
+            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 18px 36px rgba(0, 231, 255, 0.35);
+        }
+        .contact-form button:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: #07090d;
+            padding: 12px 20px;
+            border-radius: 12px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 24px var(--shadow);
+            border: 1px solid var(--card-border);
+            font-weight: 800;
+            letter-spacing: 0.2px;
+        }
+        .toast.show { display: block; animation: fadeInOut 3.2s ease-in-out forwards; }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, 6px); }
+            10% { opacity: 1; transform: translate(-50%, 0); }
+            90% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -6px); }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Kelvin kabuya Portfolio</h1>
-    <h2>I am a Web Developer</h2>
-    </h2>
-    <hr />
-    <h3><a href="./public/movie-ranking.html">Movie Ranking Project</a>"</h3>
-    <img src="./assets/images/movie-ranking.png" height="200" alt="movie ranking project preview"/>
-    <h3><a href="./public/birthday-invite.html">Birthday Invite Project</a></h3>
-    <img src="./assets/images/birthday-invite.png" height="200" alt="birthday invite project preview"/>
-    <hr />
-    <a href="./public/about.html">About Me</a>
-    <a href="./public/contact.html">Contact Me</a>
+<header>
+    <h1>My portfolio</h1>
+    <h2>Developer</h2>
+</header>
+<hr />
+<section class="language-section">
+    <h3>C++ Projects</h3>
+    <div class="projects">
+        <div class="project">
+            <h4>Game Engine Prototype</h4>
+            <p>A lightweight 2D game engine built with C++ and OpenGL, optimized for performance.</p>
+            <a href="#">View Code</a>
+            <img src="./assets/images/game-engine.png" alt="game engine preview" />
+        </div>
+        <!-- Add more C++ projects here -->
+    </div>
+</section>
+<section class="language-section">
+    <h3>Python Projects</h3>
+    <div class="projects">
+        <div class="project">
+            <h4>Data Analysis Tool</h4>
+            <p>A Python script using pandas and Matplotlib for real-time data visualization.</p>
+            <a href="#">View Code</a>
+            <img src="./assets/images/data-tool.png" alt="data analysis tool preview" />
+        </div>
+        <!-- Add more Python projects here -->
+    </div>
+</section>
+<section class="language-section">
+    <h3>Rust Projects</h3>
+    <div class="projects">
+        <div class="project">
+            <h4>WebAssembly App</h4>
+            <p>A Rust-based WebAssembly module for a browser game, ensuring memory safety.</p>
+            <a href="#">View Code</a>
+            <img src="./assets/images/wasm-app.png" alt="wasm app preview" />
+        </div>
+        <!-- Add more Rust projects here -->
+    </div>
+</section>
+<section class="language-section">
+    <h3>Go Projects</h3>
+    <div class="projects">
+        <div class="project">
+            <h4>Microservices API</h4>
+            <p>A Go-based microservice using gin for a scalable backend system.</p>
+            <a href="#">View Code</a>
+            <img src="./assets/images/microservice.png" alt="microservice preview" />
+        </div>
+        <!-- Add more Go projects here -->
+    </div>
+</section>
+<section class="contact-section">
+    <h3>Contact Me</h3>
+    <div class="contact-form">
+        <form id="contactForm" action="https://formspree.io/f/xnngajbk" method="POST" enctype="multipart/form-data">
+            <label>
+                Your email:
+                <input type="email" name="email" required>
+            </label>
+            <label>
+                Your file:
+                <input type="file" name="upload" required>
+            </label>
+            <button type="submit">Send</button>
+        </form>
+        <div id="toast" class="toast"></div>
+    </div>
+    <!-- modify this form HTML and place wherever you want your form -->
+    <div class="contact-form">
+        <form
+          action="https://formspree.io/f/xnngajbk"
+          method="POST"
+        >
+          <label>
+            Your email:
+            <input type="email" name="email">
+          </label>
+          <label>
+            Your message:
+            <textarea name="message"></textarea>
+          </label>
+          <!-- your other form fields go here -->
+          <button type="submit">Send</button>
+        </form>
+    </div>
+</section>
+<script>
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
 
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => toast.classList.remove('show'), 3200);
+    }
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const email = form.querySelector('input[name="email"]');
+        const message = form.querySelector('textarea[name="message"]');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.value.trim())) {
+            showToast('Please enter a valid email address.');
+            return;
+        }
+
+        // Message validation
+        if (!message.value.trim()) {
+            showToast('Please enter your message.');
+            return;
+        }
+
+        const formData = new FormData(form);
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (res.ok) {
+                showToast('Message sent successfully!');
+                form.reset();
+            } else {
+                showToast('Failed to send. Please try again.');
+            }
+        } catch (err) {
+            showToast('Network error. Please try again later.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+</script>
 </body>
-
 </html>
-
